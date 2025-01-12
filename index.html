@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safe Tax LLC | Upload Today , Pay Tomorrow</title>
+<style>
+  body {
+    background-color: rgb(245, 241, 241);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    height: 100%;
+  }
+
+  header {
+    height: 100px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+
+  #news {
+    padding-top: 60px;
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
+  }
+
+  .marquee-container {
+    padding: 10px;
+    background: #90b4e6;
+    width: 98vw;
+    overflow: hidden;
+  }
+
+  marquee {
+    font-size: 16px;
+    color: #2d3436;
+    font-weight: bold;
+  }
+
+  .logo {
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+      width: 50px; /* Ensures the image fits within the container */
+      height: 50px; /* Matches the width to make it square */
+      border-radius: 50%; /* Makes the image circular */
+      object-fit: contain; /* Ensures the entire image is visible within the container */
+      background-color: white; /* Optional: Adds a background for contrast */
+      margin-right: 11px; /* Spacing between the image and text */
+    }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  nav {
+    display: flex;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 767px) {
+    .menu-toggle {
+      display: block;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 100px;
+      left: 0;
+      width: 100%;
+      background-color: #f5f5f5;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    nav.show {
+      display: flex;
+
+    }
+
+    .marquee-container {
+      width: 95vw;
+    }
+  }
+
+  aside {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .info-box,
+  .faq-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px;
+    flex: 1;
+  }
+
+  .info-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .info-box ul li {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+  }
+
+  .info-box ul li::before {
+    content: "✔";
+    color: green;
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+  }
+
+  .faq-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+
+  .shared-style {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  label {
+    margin-right: 10px;
+  }
+
+  footer {
+    text-align: center;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
+  }
+
+  #circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+
+  .services {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .services h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #24292f;
+  }
+
+  .services p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: #6c757d;
+  }
+
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .container1 {
+    background-color: #d9e0e9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .quote {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .upload-btn {
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .upload-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+
+  .card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 0 30px 20px 0;
+    width: 380px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .card .icon img {
+    width: 100%;
+  }
+
+  .card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #24292f;
+  }
+
+  .card p {
+    text-align: justify;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+  }
+
+  .card a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  .card a:hover {
+    color: #0056b3;
+  }
+
+  .card li {
+    text-align: left;
+    padding: 10px;
+  }
+
+  #itr {
+    padding-top: 3%;
+    font-size: 3rem;
+  }
+
+  .slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  #body {
+    text-align: center;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #FFA500;
+    background-color: #033a75;
+    background-size: cover;
+  }
+
+  .overlay1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .container2 {
+    text-align: center;
+    padding: 50px 20px;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .features {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .feature {
+    background-image: url('images.jpg') ;
+    color: black;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-size: cover;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    width: 280px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .feature h3 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+
+  .feature p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .cta {
+    margin-top: 40px;
+    padding: 15px 30px;
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .cta:hover {
+    background: #218838;
+    transform: scale(1.05);
+  }
+
+  .help-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #0047ab;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .help-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .help-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  .contact-options {
+    margin-top: 20px;
+  }
+
+  .contact-options a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #0047ab;
+    background-color: #ffd700;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .contact-options a:hover {
+    background-color: #ffa500;
+    color: #fff;
+  }
+
+  .slide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+  .content {
+    text-align: justify;
+    padding: 20px;
+    max-width: 90%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+
+  .quote {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  h3 {
+    margin-top: 10px;
+  }
+
+  p {
+    margin-top: 10px;
+  }
+
+  .dots {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .faq-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .faq-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #0047ab;
+  }
+
+  .faq-question:hover {
+    color: #002e6e;
+  }
+
+  .faq-answer {
+    display: none;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  .faq-symbol {
+    font-size: 1.5rem;
+    color: #0047ab;
+    transition: transform 0.3s;
+  }
+
+  .faq-symbol.rotate {
+    transform: rotate(45deg);
+  }
+
+  .dot {
+    width: 15px;
+    height: 15px;
+    margin: 5px 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dot:hover {
+    background-color: white;
+  }
+
+  .dot.active {
+    background-color: white;
+  }
+  .about-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+    background: url('about.jpg') no-repeat center/cover;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .about-container h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 15px;
+  }
+  .footer {
+    background-color: #0047ab;
+    color: white;
+    padding: 20px 0;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .footer-column {
+    flex: 1 1 250px;
+    margin: 10px;
+  }
+
+  .footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #ffdf00;
+  }
+
+  .footer-column a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+
+  .footer-column a:hover {
+    color: #ffdf00;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  .social-icons a {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: #ffdf00;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-column {
+      text-align: center;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="Logo final.png"id="circle" alt="Logo">
+      <span>SAFETAXLLC</span>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle Menu">
+      &#9776;
+    </button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="https://tax-eight.vercel.app">Upload</a></li>
+        <li><a href="#why">Why Safe Tax?</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#needHelp">Need Help?</a></li>
+      </ul>
+    </nav>
+  </header>  
+  <h1 id="news"></h1>
+  <div class="marquee-container">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      January 31, 2025: Employers and payers must send W-2s and 1099s to recipients.|
+      April 15, 2025: File 2024 taxes, pay owed taxes, or request a filing extension.|
+      October 15, 2025: Final deadline to file 2024 taxes if an extension was requested.|
+      December 31, 2025: Last day for tax-deductible contributions and year-end planning |
+    </marquee>
+  </div>
+  <div id="body">
+    <div class="overlay1"></div>
+    <div class="container2">
+      <div class="title">Welcome to Tax Reminder</div>
+      <div class="quote">"Never miss a tax deadline—our reminders keep you on track, penalty-free!"</div>
+      <div class="description">
+        Upload your tax-related PDFs, and we'll ensure you get timely alerts to pay your taxes before the deadline.
+      </div>
+    </div><a href="https://tax-eight.vercel.app"><button class="cta">Upload Tax Files</button></a>
+  </div>
+</div>
+<section id="why">
+  <h2 style="padding-top: 20px; text-align: center;">Why Safe Tax?</h2>
+  <div class="features">
+    <div class="feature">
+      <p>Welcome to Safe Tax LLC, where your safety and security come first. Founded in 2024, Safe Tax LLC was built on the idea that taxes don’t have to be stressful, and, most importantly, your personal and financial information should always be protected. In today’s digital age, data breaches and identity theft are growing concerns, and we understand that trusting someone with your tax information is a significant decision. That’s why, at Safe Tax LLC, we go above and beyond to ensure your data is safe, secure, and handled with the utmost care.</p>
+    </div>
+    <div class="feature">
+      <p>Unlike other tax service providers, we have implemented industry-leading security measures to protect your sensitive information. Our team uses the latest encryption technologies and secure systems to ensure that your data is never compromised. We follow stringent protocols and conduct regular audits to keep our security measures up to date with the latest threats. With Safe Tax LLC, you can rest assured that your tax filings and personal information are in good hands.</p>
+    </div>
+    <div class="feature">
+      <p>Our commitment to safety doesn't stop at technology. We also prioritize transparency and integrity in our services. We believe in educating our clients about tax processes and security measures, ensuring you always feel confident and informed throughout your entire experience with us. Whether you're filing taxes for the first time or seeking ongoing tax planning, we take the time to explain every step, making sure you understand how your information is being handled safely and securely.</p>
+    </div>
+    <div class="feature">
+      <p>At Safe Tax LLC, our goal is simple: To provide the best possible tax services without compromising your safety. We know that when it comes to taxes, trust is everything. That’s why we make safety our top priority. Our team of experts stays current with the latest tax laws and regulations, ensuring that you’re not only protected but also receiving the most accurate and beneficial advice tailored to your specific needs.
+</p>
+    </div>
+  </div>
+</section>
+<section id="about">
+  <h2 style="padding-top: 20px; text-align: center;">About Us</h2>
+  <div class="features">
+    <div class="feature">
+      <p>Safe Tax LLC was established in 2024 with a clear mission to provide reliable, secure, and efficient tax-related services. Our company was founded on the belief that everyone deserves to have their tax concerns addressed by professionals who genuinely care about their financial well-being. With years of combined experience, our team of experts is dedicated to helping individuals and businesses navigate the complexities of taxes and ensure compliance while maximizing savings.</p>
+    </div>
+    <div class="feature">
+      <p>At Safe Tax LLC, we prioritize the security and privacy of our clients’ data. Using the latest technology and industry best practices, we ensure that your information is always protected. Our tax professionals stay up-to-date with ever-changing tax laws and regulations, so you can rest assured that we will provide you with the most current and accurate advice available.</p>
+    </div>
+    <div class="feature">
+      <p>Whether you are an individual taxpayer looking to file your taxes, a business seeking assistance with payroll or corporate tax returns, or someone looking for long-term tax planning, Safe Tax LLC is here to help. We offer a range of services tailored to meet your specific needs and make tax season a stress-free experience.</p>
+    </div>
+    <div class="feature">
+      <p>Our values of honesty, integrity, and transparency guide everything we do. We believe in building long-term relationships with our clients based on trust, which is why many of our clients return to us year after year. We look forward to helping you achieve your financial goals while providing the best customer service possible.</p>
+    </div>
+  </div>
+</section>
+      </aside>
+  </div>
+  <p id="needHelp"></p>
+  <br>
+  <section>
+    <div class="help-container">
+      <h2>Need Help?</h2>
+      <p>We’re here to assist you with any questions or concerns about tax filing, document uploads, or deadline alerts. 
+         Whether you need technical support or expert advice, our team is just a click away.</p>
+      <div class="contact-options">
+        <a href="mailto:binduvarshasunkara@gmail.com">Email Support</a>
+        <a href="tel:+1234567890">Call Us</a>
+        <a href="tel:+1234567890">Costumer care</a>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="faq-container" id="faq-section">
+      <h2>Frequently Asked Questions</h2>
+  
+      <!-- Existing Questions -->
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Am I considered a resident or non-resident alien for tax purposes?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          H1B visa holders are typically classified as resident aliens if they pass the substantial presence test.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How do I upload my tax documents?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          To upload your tax documents, simply log in to your account, go to the "Upload Documents" section, and follow the instructions to attach your files securely.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What happens if I miss a tax deadline?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          If you miss a tax deadline, penalties may apply. Our system sends you three reminders to help you avoid this situation. Contact us immediately if you need assistance after missing a deadline.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How secure is my data?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          We use industry-standard encryption and secure systems to protect your data. Regular audits and strict protocols ensure your information remains confidential and safe.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Do I need to sign in to upload documents?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes, you need to sign in to upload your PDF. Once signed in, you will automatically be directed to the upload page.
+        </div>
+      </div>
+  
+      <!-- New Questions for H1B Visa Holders -->
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What taxes are deducted from my paycheck?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          H1B workers are subject to federal income tax, Social Security tax, and Medicare tax. State income tax may also apply.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I claim dependents on my tax return?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes, if you meet the requirements for resident alien status and provide the necessary documentation for your dependents.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Am I eligible for tax credits like the Child Tax Credit or the Earned Income Tax Credit?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          As a resident alien, you may be eligible for these credits, provided you meet income and filing requirements.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What expenses can I deduct as an H1B worker?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          While the 2017 Tax Cuts and Jobs Act eliminated most employee business expense deductions, you can still deduct expenses related to moving (if applicable) or education if they qualify under current tax laws.
+        </div>
+      </div>
+  
+      <!-- New Questions for F1 Visa Holders -->
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Do I need to file taxes as an F1 visa holder, even if I didn’t earn any income?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes, all F1 visa holders must file Form 8843 annually, even if they have no income.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Am I considered a resident or non-resident alien for tax purposes?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          F1 visa holders are generally considered non-resident aliens for the first five calendar years of their stay in the U.S. under the substantial presence test.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What forms should I use to file my taxes?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Non-resident aliens usually file Form 1040-NR, but if you qualify as a resident alien, you may need to file Form 1040.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Are scholarships or fellowships taxable?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Scholarships and fellowships used for tuition, fees, and books are generally not taxable. However, funds used for living expenses, such as room and board, are taxable.
+        </div>
+      </div>
+  
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I claim any deductions or tax treaties as an F1 student?</span>
+          <span class="faq-symbol">+</span>
+        </div>
+        <div class="faq-answer">
+          Depending on your country of origin, you may be eligible for benefits under a tax treaty between the U.S. and your home country. Common deductions include student loan interest and some education-related expenses.
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>About Us</h3>
+        <p>Your trusted partner for secure and timely tax filing. We ensure a seamless experience by sending deadline
+          reminders to keep you penalty-free.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <p>Phone: +1 234 567 890</p>
+        <p>Email: support@safetaxllc.com</p>
+        <p>Address: 123 Tax Avenue, Finance City, USA</p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#faqs">FAQs</a>
+      </div>
+      <div class="footer-column">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook">🌐</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">🐦</a>
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram">📷</a>
+          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Safe Tax LLC. All rights reserved. | <a href="#privacy-policy" style="color: #ffdf00;">Privacy
+          Policy</a></p>
+    </div>
+  </footer>
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector("nav");
+
+      menuToggle.addEventListener("click", () => {
+        nav.classList.toggle("show");
+      });
+    });
+
+   document.addEventListener("DOMContentLoaded", () => {
+  const faqQuestions = document.querySelectorAll('.faq-question');
+
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+      const answer = question.nextElementSibling;
+      const symbol = question.querySelector('.faq-symbol');
+      
+      // Toggle answer display
+      if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+      } else {
+        answer.style.display = 'block';
+      }
+      symbol.classList.toggle('rotate');
+    });
+  });
+});
+</script>
+</body>
+
+</html>
